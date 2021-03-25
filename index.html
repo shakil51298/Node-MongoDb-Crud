@@ -18,10 +18,13 @@
     <div id="products">
 
     </div>
+    <div id="update">
+
+    </div>
 
 
     <script> // READ DATA FROM DATA BASE MONGOBD
-        const loadProducts = () => {
+        const loadAllProducts = () => {
                 const url = 'http://localhost:3000/products'
             fetch(url)
             .then(res => res.json())
@@ -35,13 +38,30 @@
                     console.log(pd);
                     const pp = document.createElement('p');
                     pp.innerHTML=`name: ${pd.Pname} -- price : ${pd.price} -- quantity : ${pd.quantity}
-                        <button  onclick="deletProducts('${pd._id}')" class="btn btn-danger">Delete data </button>
+                        <button  onclick="loadProducts('${pd._id}')" class="btn btn-primary">Update </button>
+                        <button  onclick="loadAllProducts('${pd._id}')" class="btn btn-danger">Delete data </button>
                     `;
                     mainDiv.appendChild(pp)
                 })
             }
         }
-        loadProducts();
+        const loadProducts = (id)=>{
+            fetch(`/product/${id}`)
+            .then( res => res.json())
+            .then(data => {
+                const update = document.getElementById('update')
+                update.innerHTML = `
+                <h3>Updating :${id}</h3>
+                <input type="text" value="${data.price}"  id="price">
+                <br>
+                <input type="text" value="${data.quantity}"  id="quantity">
+                <br>
+                <button class="btn btn-danger">submit update</button>
+                `
+                console.log(data);
+            })
+        }
+        loadAllProducts();
         const deletProducts = (id) =>{
             fetch(`/delete/${id}`, {
                 method: "DELETE"
@@ -51,6 +71,7 @@
                 console.log("delete succesfully");
             })
         }
+
     </script>
 </body>
 </html>

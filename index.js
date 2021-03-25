@@ -21,10 +21,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
       }) 
 
     })
+
+    app.get('/product/:id', (req , res)=>{
+      pCollection.find({_id : ObjectID(req.params.id)})
+      .toArray((err, document)=>{
+        res.send(document[0])
+      })
+    })
     app.get('/', (req, res) => {
       res.sendFile(__dirname + "/index.html")
     })
-    
+    // POST
     app.post("/addProduct", (req, res) => {
       const product = req.body;
       pCollection.insertOne(product,()=>{
@@ -34,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
       console.log(product)
     });
-
+      // DELETE
     app.delete('/delete/:id', (req, res)=>{
       pCollection.deleteOne({_id : ObjectID(req.params.id)})
       .then(res => {
