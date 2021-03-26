@@ -41,11 +41,22 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
       console.log(product)
     });
+    // PATHC for update
+    app.patch('/update/:id', (req, res)=>{
+      pCollection.updateOne({_id : ObjectID(req.params.id)},
+      {
+        $set: { price : req.body.price, quantity : req.body.quantity}
+      })
+      .then(result =>{
+        console.log(result);
+      })
+    })
       // DELETE
     app.delete('/delete/:id', (req, res)=>{
       pCollection.deleteOne({_id : ObjectID(req.params.id)})
       .then(res => {
         console.log(res);
+        console.log("data deleted");
       })
     })
     
