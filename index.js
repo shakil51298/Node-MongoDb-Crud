@@ -47,7 +47,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
         $set: { price : req.body.price, quantity : req.body.quantity}
       })
       .then(result =>{
-        console.log(result);
+        res.send(result.modifiedCount > 0)
       })
     })
       // DELETE
