@@ -35,8 +35,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
     app.post("/addProduct", (req, res) => {
       const product = req.body;
       pCollection.insertOne(product,()=>{
-        console.log("product added to database");
-        res.send("product save success to database!!")
+        res.redirect('/')
       })
 
       console.log(product)
@@ -54,18 +53,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
       // DELETE
     app.delete('/delete/:id', (req, res)=>{
       pCollection.deleteOne({_id : ObjectID(req.params.id)})
-      .then(res => {
-        console.log(res);
-        console.log("data deleted");
+      .then(result => {
+        res.send(result.deletedCount > 0)
       })
     })
     
 
   })
-
-
-
-
 
 
 

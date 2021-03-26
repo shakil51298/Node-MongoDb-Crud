@@ -43,7 +43,7 @@
                     const pp = document.createElement('p');
                     pp.innerHTML = `name: ${pd.Pname} -- price : ${pd.price} -- quantity : ${pd.quantity}
                         <button  onclick="loadProducts('${pd._id}')" class="btn btn-primary">Update </button>
-                        <button  onclick="deletProducts('${pd._id}')" class="btn btn-danger">Delete data </button>
+                        <button  onclick="deletProducts(' ${pd._id}')" class="btn btn-danger">Delete data </button>
                     `;
                     mainDiv.appendChild(pp)
                 })
@@ -70,6 +70,7 @@
         loadAllProducts();
         // updateProduct
         const updateProduct = (id) => {
+            console.log("hit inside");
             const price = document.getElementById('price').value;
             const quantity = document.getElementById('quantity').value;
             const prodcut = { id, price, quantity };
@@ -84,13 +85,13 @@
                 });
         }
         // delete prodcuts function
-        const deletProducts = (id) => {
+        const deletProducts = ( id) => {
             fetch(`/delete/${id}`, {
                 method: "DELETE"
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log("delete succesfully");
+                   
                 })
         }
 
